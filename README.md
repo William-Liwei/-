@@ -1,5 +1,7 @@
 # CourseWing: A Smart Course Selection Tool for Students
+
 Li Wei, Wang Zixin
+
 School of Computer Engineering and Science, Shanghai University
 ## Abstract
 "CourseWing" is an innovative educational auxiliary platform deployed on Tianyi Cloud Server, aimed at simplifying the course selection process for college students and improving the efficiency of course selection. By integrating functions such as grade inquiry, course evaluation, and user community, it constructs a comprehensive teaching auxiliary system. The system uses the Flask framework for backend development, ensuring the stability and scalability of the service. At the same time, through the automation operation realized by Playwright, the course selection process is more intelligent. In addition, the system also introduces emotional analysis and other AI technologies to enhance user experience and provide more personalized services. Through the application of these technologies, "CourseWing" not only simplifies the course selection process but also promotes the rational allocation of educational resources and makes contributions to educational equity.
