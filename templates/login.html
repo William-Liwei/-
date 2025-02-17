@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: #f8f9fd;
+            margin: 0;
+            padding: 0;
+        }*/
+        
+        .containerspe {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+ 
+        .message {
+            padding: 1rem; /* 保持与 Toast 相同的内边距 */
+            margin-bottom: 1rem; /* 保持与 Toast 相同的外边距 */
+            border-radius: 0.5rem; /* 保持与 Toast 相同的圆角 */
+            color: #ffffff; /* 保持与 Toast 相同的文字颜色 */
+            text-align: center; /* 保持与 Toast 相同的文本居中 */
+            background-color: #4CAF50; /* 默认成功消息的背景色 */
+            animation: fadeOut 3s ease-in forwards; /* 添加淡出动画 */
+        }
+ 
+        .success { background-color: #4CAF50; }
+        .error { background-color: #f44336; }
+ 
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+ 
+        .form-group label {
+            color: #4b5563;
+            font-weight: 500;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+ 
+        .form-group input {
+            background-color: rgba(249, 250, 251, 0.8);
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 0.625rem;
+            width: 80%;
+            transition: all 0.3s ease;
+        }
+ 
+        .form-group input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            background-color: #ffffff;
+        }
+ 
+        .form-group button,
+        .send-code-button {
+            padding: 0.625rem 1.25rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #3b82f6;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+        }
+ 
+        .form-group button:hover,
+        .send-code-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+            background-color: #2563eb;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: #f8f9fd;
+        }
+
+        .main-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9ff 100%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #3b82f6;
+            display: inline-block;
+        }
+
+        .input-field {
+            background-color: rgba(249, 250, 251, 0.8);
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 0.625rem;
+            width: 100%;
+            margin-top: 0.25rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            background-color: #ffffff;
+        }
+
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .label-text {
+            color: #4b5563;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-card {
+            background: #ffffff;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body>
+    <!-- 页面顶部标题栏 -->
+    <div class="page-header">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl font-bold text-white text-center mb-2">课程翼选通</h1>
+            <p class="text-blue-100 text-center">SHU排课助手</p>
+            <p class="text-gray-300 text-sm text-center mt-2">作者：羽，ouo</p>
+            <p class="text-gray-300 text-sm text-center mt-1">版本号：2.04web</p>
+        </div>
+    </div>
+    <div class="containerspe">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="message {{ 'success' if message == '登录成功' else 'error' }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        
+        <form action="/login" method="post" class="form-group">
+            <label for="email">邮箱:</label>
+            <input type="email" id="email" name="email" required value="2494546924@qq.com">
+            <label for="code">验证码:</label>
+            <input type="text" id="code" name="code" required value="2024SHU">
+            <button type="submit">登录</button>
+        </form>
+        <button class="send-code-button" onclick="sendCode()">发送验证码</button>
+    </div>
+
+    <footer class="footer">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex justify-center items-center">
+                <div>
+                    <p>&copy; 2024 课程翼选通. 版权所有.
+                        <a href="https://github.com/William-Liwei" target="_blank" class="mr-4">Github</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        function sendCode() {
+            const emailInput = document.getElementById('email');
+            const email = emailInput.value;
+            fetch('/send_code', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `email=${encodeURIComponent(email)}`
+            }).then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    showToast('验证码已发送至您的邮箱，请查收。');
+                } else {
+                    
+                    console.error('验证码发送失败:', data.error);
+                    showToast('验证码发送失败', 'error');
+                }
+            }).catch(error => console.error('Error:', error));
+        }
+        // 页面加载时检查是否有 toast 消息需要显示
+        window.addEventListener('load', function() {
+            const toastMessage = "{{ toast_message }}"; // 从 Flask 模板传递消息
+            if (toastMessage) {
+                showToast(toastMessage);
+            }
+        });
+        // Toast提示功能
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-4 right-4 px-6 py-3 rounded-lg text-white transition-all duration-300 transform translate-y-0 opacity-100 shadow-lg z-50 ${
+                type === 'success' ? 'bg-green-600' : 'bg-red-600'
+            }`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

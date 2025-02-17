@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>课程评论</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: #f8f9fd;
+            margin: 0;
+            padding: 0;
+        }*/
+        
+        .containerspe {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+ 
+        .message {
+            padding: 1rem; /* 保持与 Toast 相同的内边距 */
+            margin-bottom: 1rem; /* 保持与 Toast 相同的外边距 */
+            border-radius: 0.5rem; /* 保持与 Toast 相同的圆角 */
+            color: #ffffff; /* 保持与 Toast 相同的文字颜色 */
+            text-align: center; /* 保持与 Toast 相同的文本居中 */
+            background-color: #4CAF50; /* 默认成功消息的背景色 */
+            animation: fadeOut 3s ease-in forwards; /* 添加淡出动画 */
+        }
+ 
+        .success { background-color: #4CAF50; }
+        .error { background-color: #f44336; }
+ 
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+ 
+        .form-group label {
+            color: #4b5563;
+            font-weight: 500;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+ 
+        .form-group input {
+            background-color: rgba(249, 250, 251, 0.8);
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 0.625rem;
+            width: 80%;
+            transition: all 0.3s ease;
+        }
+ 
+        .form-group input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            background-color: #ffffff;
+        }
+ 
+        .form-group button,
+        .send-code-button {
+            padding: 0.625rem 1.25rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #3b82f6;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+        }
+ 
+        .form-group button:hover,
+        .send-code-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+            background-color: #2563eb;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: #f8f9fd;
+        }
+
+        .main-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9ff 100%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #3b82f6;
+            display: inline-block;
+        }
+
+        .input-field {
+            background-color: rgba(249, 250, 251, 0.8);
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 0.625rem;
+            width: 100%;
+            margin-top: 0.25rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            background-color: #ffffff;
+        }
+
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .label-text {
+            color: #4b5563;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-card {
+            background: #ffffff;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body>
+    <!-- 页面顶部标题栏 -->
+    <div class="page-header">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl font-bold text-white text-center mb-2">课程翼选通</h1>
+            <p class="text-blue-100 text-center">SHU排课助手</p>
+            <p class="text-gray-300 text-sm text-center mt-2">作者：羽，ouo</p>
+            <p class="text-gray-300 text-sm text-center mt-1">版本号：2.04web</p>
+            <p class="text-gray-300 text-sm text-center mt-1">欢迎回来，{{ email }}！</p>
+            
+        </div>
+    </div>
+    <div class="containerspe">
+        <div class="main-card p-8 max-w-5xl mx-auto rounded-xl">
+            <h1 class="text-4xl font-bold mb-4">课程评论</h1>
+            <form method="post" action="/submit_comment">
+                <div class="form-group">
+                    <label for="course_number">课程号</label>
+                    <input type="text" id="course_number" name="course_number" required>
+                </div>
+                <div class="form-group">
+                    <label for="course_name">课程名</label>
+                    <input type="text" id="course_name" name="course_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="teacher_name">教师名</label>
+                    <input type="text" id="teacher_name" name="teacher_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="rating">评分</label>
+                    <input type="number" id="rating" name="rating" min="0" max="10" step="0.1" required>
+                </div>
+                <div class="form-group">
+                    <label for="comment_content">评论内容</label>
+                    <input type="text" id="comment_content" name="comment_content" required>
+                </div>
+                <button type="submit" class="send-code-button">提交评论</button>
+            </form>
+            <div class="container mx-auto px-4 py-6">
+                <h1 class="text-4xl font-bold mb-4">评论查询</h1>
+                <form method="get" action="/search_comments">
+                    <div class="form-group">
+                        <label for="course_number_search">课程号</label>
+                        <input type="text" id="course_number_search" name="course_number" required>
+                    </div>
+                    <button type="submit" class="send-code-button">查找评论</button>
+                </form>
+                <h2 class="mt-8 text-2xl font-bold">现有评论</h2>
+                {% if average_rating %}
+                    <p>平均评分：{{ average_rating|round(1) }}</p>
+                    <div id="commentSummary" class="bg-white rounded-lg shadow p-6">
+                        <h2 class="mt-4 text-2xl font-bold mb-4">AI智能总结</h2>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="bg-gray-50 p-4 rounded">
+                                <p class="font-semibold">总评论数：{{ summary.total_comments }}</p>
+                                <p class="font-semibold">有效内容：{{ (summary.positive_count+summary.negative_count+summary.neutral_count) }}</p>
+                                <p class="text-green-600">正面评价：{{ summary.positive_count }}</p>
+                                <p class="text-red-600">负面评价：{{ summary.negative_count }}</p>
+                                <p class="text-gray-600">中性评价：{{ summary.neutral_count }}</p>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded">
+                                <p class="font-semibold mb-2">情感分布</p>
+                                {% if summary.total_comments > 0 %}
+                                    <div class="w-full bg-gray-200 rounded-full h-4">
+                                        {% set positive_percent = (summary.positive_count / (summary.positive_count+summary.negative_count+summary.neutral_count) * 100)|round %}
+                                        {% set negative_percent = (summary.negative_count / (summary.positive_count+summary.negative_count+summary.neutral_count) * 100)|round %}
+                                        {% set neutral_percent = (summary.neutral_count / (summary.positive_count+summary.negative_count+summary.neutral_count) * 100)|round %}
+                                        <div class="bg-green-500 h-4 rounded-l" style="width: {{ positive_percent }}%; display: inline-block;"></div>
+                                        <div class="bg-red-500 h-4" style="width: {{ negative_percent }}%; display: inline-block;"></div>
+                                        <div class="bg-gray-400 h-4 rounded-r" style="width: {{ neutral_percent }}%; display: inline-block;"></div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        {% if summary.aspect_opinion %}
+                            <div class="mt-6">
+                                <h3 class="text-xl font-semibold mb-4">详细评价分析</h3>
+                                {% for aspect, opinions in summary.aspect_opinion.items() %}
+                                    <div class="mb-4 bg-gray-50 p-4 rounded">
+                                        <h4 class="font-medium text-lg mb-2">{{ aspect }}</h4>
+                                        <ul class="list-disc pl-5 space-y-2">
+                                            {% for opinion in opinions %}
+                                                <li class="{% if opinion.polarity == '正面' %}text-green-600{% elif opinion.polarity == '负面' %}text-red-600{% else %}text-gray-600{% endif %}">
+                                                    {{ opinion.opinion }}
+                                                    <span class="text-sm ml-2">({{ opinion.polarity }})</span>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                <ul class="mt-4">
+                    {% for comment in comments %}
+                        <li class="py-4 border-b border-gray-200 {% if comment.is_pinned %}bg-yellow-50{% endif %}">
+                            <!-- 用户信息区域 -->
+                            <div class="flex items-center mb-2">
+                                <img src="{{ comment.author.avatar or '/static/default-avatar.png' }}" 
+                                     alt="用户头像" 
+                                     class="w-10 h-10 rounded-full mr-3">
+                                <div>
+                                    <div class="flex items-center">
+                                        <span class="font-semibold">{{ comment.author.nickname or comment.author.email }}</span>
+                                        <!-- 会员等级标识 -->
+                                        {% if comment.author.level > 1 %}
+                                            <span class="ml-2 px-2 py-0.5 text-xs rounded-full
+                                                {% if comment.author.level == 2 %}bg-gray-200 text-gray-700
+                                                {% elif comment.author.level == 3 %}bg-yellow-100 text-yellow-700
+                                                {% elif comment.author.level == 4 %}bg-blue-100 text-blue-700
+                                                {% else %}bg-purple-100 text-purple-700{% endif %}">
+                                                {{ comment.author.get_level_name() }}
+                                            </span>
+                                        {% endif %}
+                                        <!-- 置顶标记 -->
+                                        {% if comment.is_pinned %}
+                                            <span class="ml-2 text-yellow-600 text-sm">
+                                                <i class="fas fa-thumbtack"></i> 高亮
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="text-gray-500 text-sm">{{ comment.post_time.strftime('%Y-%m-%d %H:%M') }}</div>
+                                </div>
+                            </div>
+                
+                            <!-- 评论内容区域 -->
+                            <div class="ml-13">
+                                <div class="grid grid-cols-3 gap-4 mb-2">
+                                    <div>课程号：{{ comment.course_number }}</div>
+                                    <div>课程名：{{ comment.course_name }}</div>
+                                    <div>教师名：{{ comment.teacher_name }}</div>
+                                </div>
+                                
+                                <!-- 评分显示 -->
+                                <div class="flex items-center mb-2">
+                                    <span class="mr-2">评分：</span>
+                                    <div class="flex text-yellow-400">
+                                        {% for _ in range(comment.rating|int) %}
+                                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
+                                                <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                                            </svg>
+                                        {% endfor %}
+                                    </div>
+                                    <span class="ml-2">{{ comment.rating }}/10</span>
+                                </div>
+                
+                                <!-- 评论内容 -->
+                                <div class="text-gray-700 mb-3">
+                                    评论内容：{{ comment.comment_content }}
+                                </div>
+                
+                                <!-- 操作区域 -->
+                                <div class="flex items-center space-x-4">
+                                    <!-- 点赞按钮 -->
+                                    <button onclick="likeComment({{ comment.id }})" 
+                                            class="text-gray-500 hover:text-blue-600 flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                  d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/>
+                                        </svg>
+                                        <span class="like-count">{{ comment.likes }}</span>
+                                    </button>
+                
+                                    <!-- 管理员删除按钮 -->
+                                    {% if email == ADMIN_EMAIL %}
+                                        <form method="post" action="{{ url_for('delete_comment', comment_id=comment.id) }}" class="inline">
+                                            <button type="submit" 
+                                                    class="text-red-600 hover:text-red-800 flex items-center">
+                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                </svg>
+                                                删除评论
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                
+                                    <!-- 高级会员置顶按钮 -->
+                                    {% if comment.author.level >= 4 and comment.author.email == email or email == ADMIN_EMAIL %}
+                                        <button onclick="togglePin({{ comment.id }})"
+                                                class="text-yellow-600 hover:text-yellow-800">
+                                            {% if comment.is_pinned %}取消高亮{% else %}高亮{% endif %}
+                                        </button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        function likeComment(commentId) {
+            fetch(`/like_comment/${commentId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const likeCount = document.querySelector(`[onclick="likeComment(${commentId})"] .like-count`);
+                    likeCount.textContent = data.likes;
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+        
+        function togglePin(commentId) {
+            fetch(`/toggle_pin/${commentId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+    <footer class="footer">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex justify-center items-center">
+                <div>
+                    <p>&copy; 2024 课程翼选通. 版权所有.
+                        <a href="https://github.com/William-Liwei" target="_blank" class="mr-4">Github</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+</body>
+</html>
