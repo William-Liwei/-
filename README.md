@@ -1,4 +1,4 @@
-# CourseWing: A Smart Course Selection Tool for Students
+# CourseWingGating: A Smart Course Selection Tool for Students
 
 Li Wei, Wang Zixin
 
